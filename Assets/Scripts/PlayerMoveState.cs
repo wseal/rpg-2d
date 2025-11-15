@@ -10,7 +10,8 @@ public class PlayerMoveState : EntityState
   {
     base.Update();
 
-    if (Input.GetKey(KeyCode.G))
+    // player.rb.velocity = new Vector2(m_Player.movementInput.x * player.moveSpeed, player.rb.velocity.y);
+    if (m_Player.movementInput.x == 0)
     {
       m_StateMachine.ChangeState(m_Player.idleState);
     }

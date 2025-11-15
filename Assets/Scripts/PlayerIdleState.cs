@@ -11,7 +11,7 @@ public class PlayerIdleState : EntityState
   {
     base.Update();
 
-    if (Input.GetKey(KeyCode.F))
+    if (m_Player.movementInput.x != 0)
     {
       m_StateMachine.ChangeState(m_Player.moveState);
     }
