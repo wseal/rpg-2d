@@ -5,19 +5,23 @@ public abstract class EntityState
 {
     protected Player m_Player;
     protected StateMachine m_StateMachine;
-    protected string m_StateName;
+    protected string m_AnimationBoolName;
 
-    public EntityState(Player player, StateMachine machine, string name)
+    private Animator m_Animator;
+
+    public EntityState(Player player, StateMachine machine, string animBoolName)
     {
         m_Player = player;
         m_StateMachine = machine;
-        m_StateName = name;
+        m_AnimationBoolName = animBoolName;
+        m_Animator = player.animator;
     }
 
     // State will be change into , Eneter will be call
     public virtual void Enter()
     {
-        Debug.Log($"Enter:{m_StateName}");
+        // Debug.Log($"Enter:{m_StateName}");
+        m_Animator.SetBool(m_AnimationBoolName, true);
     }
 
     // run logic
@@ -26,6 +30,6 @@ public abstract class EntityState
     // will be call, when state exit
     public virtual void Exit()
     {
-        Debug.Log($"Leave:{m_StateName}");
+        m_Animator.SetBool(m_AnimationBoolName, false);
     }
 }

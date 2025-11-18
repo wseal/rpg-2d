@@ -2,14 +2,18 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private PlayerInputSet input;
-    public Vector2 movementInput { get; private set; }
-    public StateMachine stateMachine { get; private set; }
+    public Animator animator { get; private set; }
+    public Vector2 movementInput;
+
     public PlayerIdleState idleState { get; private set; }
     public PlayerMoveState moveState { get; private set; }
 
+    private PlayerInputSet input;
+    private StateMachine stateMachine;
+
     void Awake()
     {
+        animator = GetComponentInChildren<Animator>();
         input = new PlayerInputSet();
         stateMachine = new StateMachine();
         idleState = new PlayerIdleState(this, stateMachine, "Idle");
