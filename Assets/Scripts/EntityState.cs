@@ -7,7 +7,8 @@ public abstract class EntityState
     protected StateMachine m_StateMachine;
     protected string m_AnimationBoolName;
 
-    private Animator m_Animator;
+    protected Animator m_Animator;
+    protected Rigidbody2D m_Rigidbody;
 
     public EntityState(Player player, StateMachine machine, string animBoolName)
     {
@@ -15,6 +16,7 @@ public abstract class EntityState
         m_StateMachine = machine;
         m_AnimationBoolName = animBoolName;
         m_Animator = player.animator;
+        m_Rigidbody = player.rb;
     }
 
     // State will be change into , Eneter will be call
