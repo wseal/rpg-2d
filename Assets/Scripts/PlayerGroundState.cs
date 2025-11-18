@@ -7,7 +7,7 @@ public class PlayerGroundState : EntityState
   public override void Update()
   {
     base.Update();
-    if (m_Rigidbody.linearVelocityY < 0)
+    if (m_Rigidbody.linearVelocityY < 0 && !m_Player.groundDetected)
     {
       m_StateMachine.ChangeState(m_Player.fallState);
     }

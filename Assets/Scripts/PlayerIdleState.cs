@@ -6,6 +6,12 @@ public class PlayerIdleState : PlayerGroundState
   {
   }
 
+  public override void Enter()
+  {
+    base.Enter();
+    m_Player.SetVelocity(0, m_Rigidbody.linearVelocityY);
+  }
+
   public override void Update()
   {
     base.Update();
