@@ -4,19 +4,31 @@ public class Player : MonoBehaviour
 {
     public Rigidbody2D rb { get; private set; }
     public Animator animator { get; private set; }
-    public Vector2 movementInput { get; private set; }
 
     public PlayerIdleState idleState { get; private set; }
     public PlayerMoveState moveState { get; private set; }
+    public PlayerJumpState jumpState { get; private set; }
+    public PlayerFallState fallState { get; private set; }
 
-    private PlayerInputSet input;
+    public PlayerInputSet input { get; private set; }
     private StateMachine stateMachine;
-    private bool isFacingRight = true;
+
 
     [Header("Movement")]
     public float moveSpeed = 5f;
+    public float jumpForce = 5f;
 
+    [Range(0, 1)]
+    public float inAirMoveMultiplier = 0.7f;
+    private bool isFacingRight = true;
 
+    public Vector2 movementInput { get; private set; }
+
+    [Header("Collision Detection")]
+    // [SerializeField] public Transform groundCheck;
+    [SerializeField] private float groundCheckDistance = 0.2f;
+    [SerializeField] public LayerMask groundLayer;
+    public bool isGrounded { get; private set; }
 
     void Awake()
     {
@@ -26,6 +38,8 @@ public class Player : MonoBehaviour
         stateMachine = new StateMachine();
         idleState = new PlayerIdleState(this, stateMachine, "Idle");
         moveState = new PlayerMoveState(this, stateMachine, "Move");
+        jumpState = new PlayerJumpState(this, stateMachine, "JumpFall");
+        fallState = new PlayerFallState(this, stateMachine, "JumpFall");
     }
 
     void OnEnable()
@@ -66,7 +80,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        stateMachine.Update();
+        HandleCollisionDetection();
+        stateMachine.UpdateActiveState();
     }
     public void SetVelocity(float xVelocity, float yVelocity)
     {
@@ -88,5 +103,16 @@ public class Player : MonoBehaviour
         // scale.x *= -1;
         // transform.localScale = scale;
         isFacingRight = !isFacingRight;
+    }
+
+    private void HandleCollisionDetection()
+    {
+        isGrounded = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundLayer);
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position, transform.position + Vector3.down * groundCheckDistance);
     }
 }

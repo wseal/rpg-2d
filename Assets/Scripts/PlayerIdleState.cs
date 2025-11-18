@@ -1,11 +1,10 @@
 using UnityEngine;
 
-public class PlayerIdleState : EntityState
+public class PlayerIdleState : PlayerGroundState
 {
   public PlayerIdleState(Player player, StateMachine machine, string name) : base(player, machine, name)
   {
   }
-
 
   public override void Update()
   {
