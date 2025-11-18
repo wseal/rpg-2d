@@ -11,6 +11,8 @@ public abstract class EntityState
     protected Rigidbody2D m_Rigidbody;
     protected PlayerInputSet m_Input;
 
+    protected float m_StateTimer;
+
     public EntityState(Player player, StateMachine machine, string animBoolName)
     {
         m_Player = player;
@@ -31,12 +33,33 @@ public abstract class EntityState
     // run logic
     public virtual void Update()
     {
+        m_StateTimer -= Time.deltaTime;
         m_Animator.SetFloat("YVelocityY", m_Rigidbody.linearVelocityY);
+
+        if (m_Input.Player.Dash.WasPressedThisFrame() && CanDash())
+        {
+            m_StateMachine.ChangeState(m_Player.dashState);
+        }
     }
 
     // will be call, when state exit
     public virtual void Exit()
     {
         m_Animator.SetBool(m_AnimationBoolName, false);
+    }
+
+    bool CanDash()
+    {
+        if (m_Player.wallDetected)
+        {
+            return false;
+        }
+
+        if (m_Player.dashState == m_StateMachine.currentState)
+        {
+            return false;
+        }
+
+        return true;
     }
 }
