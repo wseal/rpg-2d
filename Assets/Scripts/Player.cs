@@ -11,9 +11,11 @@ public class Player : MonoBehaviour
 
     private PlayerInputSet input;
     private StateMachine stateMachine;
+    private bool isFacingRight = true;
 
     [Header("Movement")]
     public float moveSpeed = 5f;
+
 
 
     void Awake()
@@ -69,5 +71,22 @@ public class Player : MonoBehaviour
     public void SetVelocity(float xVelocity, float yVelocity)
     {
         rb.linearVelocity = new Vector2(xVelocity, yVelocity);
+        HandleFlip(xVelocity);
+    }
+
+    private void HandleFlip(float xVelocity)
+    {
+        if (xVelocity > 0 && !isFacingRight || xVelocity < 0 && isFacingRight)
+        {
+            Flip();
+        }
+    }
+    private void Flip()
+    {
+        transform.Rotate(0f, 180f, 0f);
+        // Vector3 scale = transform.localScale;
+        // scale.x *= -1;
+        // transform.localScale = scale;
+        isFacingRight = !isFacingRight;
     }
 }
