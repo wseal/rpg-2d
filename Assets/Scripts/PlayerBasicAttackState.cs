@@ -3,11 +3,15 @@ using UnityEngine;
 public class PlayerBasicAttackState : EntityState
 {
   private float attackVelocityTimer = 0.2f;
+  private float lastTimeAttacked = 0f;
+
+  private bool comboAttackQueued;
+  private int attackDir;
   private int comboIndex = 1;
   private int ComboLimit = 3;
   private const int FirstComboIndex = 1;
 
-  private float lastTimeAttacked = 0f;
+
   public PlayerBasicAttackState(Player player, StateMachine machine, string name) : base(player, machine, name)
   {
     if (ComboLimit != m_Player.attackVelocity.Length)
@@ -19,7 +23,17 @@ public class PlayerBasicAttackState : EntityState
   public override void Enter()
   {
     base.Enter();
+    comboAttackQueued = false;
     ResetComboIndexIfNeeded();
+
+    if (m_Player.movementInput.x != 0)
+    {
+      attackDir = m_Player.movementInput.x > 0 ? 1 : -1;
+    }
+    else
+    {
+      attackDir = m_Player.facingDir;
+    }
 
     m_Animator.SetInteger("BasicAttackIndex", comboIndex);
     ApplyAttackVelocity(); // all this setting maybe override by pre state update code.
@@ -30,10 +44,11 @@ public class PlayerBasicAttackState : EntityState
     base.Update();
     HandleAttackVelocity();
 
+    if (m_Input.Player.Attack.WasPressedThisFrame())
+      QueueNextAttack();
+
     if (triggerCalled)
-    {
-      m_StateMachine.ChangeState(m_Player.idleState);
-    }
+      HandleStateExit();
   }
 
   public override void Exit()
@@ -41,6 +56,29 @@ public class PlayerBasicAttackState : EntityState
     base.Exit();
     comboIndex += 1;
     lastTimeAttacked = Time.time; // remember time when we attacked
+  }
+
+  private void HandleStateExit()
+  {
+    if (comboAttackQueued)
+    {
+      // m_StateMachine.ChangeState(m_Player.basicAttackState);
+      m_Animator.SetBool(m_AnimationBoolName, false);
+      m_Player.EnterAttackStateWithDelay();
+    }
+    else
+    {
+      m_StateMachine.ChangeState(m_Player.idleState);
+    }
+
+  }
+
+  private void QueueNextAttack()
+  {
+    if (comboIndex < ComboLimit)
+    {
+      comboAttackQueued = true;
+    }
   }
 
   private void HandleAttackVelocity()
@@ -55,7 +93,7 @@ public class PlayerBasicAttackState : EntityState
     attackVelocityTimer = m_Player.attackVelocityDuration;
 
     var attackVel = m_Player.attackVelocity[comboIndex - 1];
-    m_Player.SetVelocity(m_Player.facingDir * attackVel.x, attackVel.y);
+    m_Player.SetVelocity(attackDir * attackVel.x, attackVel.y);
   }
 
   void ResetComboIndexIfNeeded()
