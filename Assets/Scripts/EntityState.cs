@@ -53,6 +53,7 @@ public abstract class EntityState
     public void CallAnimationTrigger()
     {
         triggerCalled = true;
+        Debug.Log("triggerCalled set to true");
     }
 
     bool CanDash()
