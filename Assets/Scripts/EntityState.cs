@@ -36,7 +36,7 @@ public abstract class EntityState
     public virtual void Update()
     {
         m_StateTimer -= Time.deltaTime;
-        m_Animator.SetFloat("YVelocityY", m_Rigidbody.linearVelocityY);
+        m_Animator.SetFloat("YVelocity", m_Rigidbody.linearVelocityY);
 
         if (m_Input.Player.Dash.WasPressedThisFrame() && CanDash())
         {

@@ -18,8 +18,9 @@ public class Player : MonoBehaviour
     private StateMachine stateMachine;
 
     [Header("Attack")]
-    public Vector2 attackVelocity;
+    public Vector2[] attackVelocity;
     public float attackVelocityDuration = 0.2f;
+    public float comboResetTime = 1f;
 
     [Header("Movement")]
     public float moveSpeed = 5f;
