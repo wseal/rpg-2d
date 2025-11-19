@@ -11,7 +11,7 @@ public class PlayerMoveState : PlayerGroundState
     base.Update();
 
     // player.rb.velocity = new Vector2(m_Player.movementInput.x * player.moveSpeed, player.rb.velocity.y);
-    if (m_Player.movementInput.x == 0)
+    if (m_Player.movementInput.x == 0 || m_Player.wallDetected)
     {
       m_StateMachine.ChangeState(m_Player.idleState);
     }
