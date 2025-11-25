@@ -2,42 +2,38 @@ using UnityEngine;
 
 public class ParallaxBackground : MonoBehaviour
 {
-
     private Camera mainCamera;
-    private float previousCameraX;
+    private float lastCameraPositionX;
     private float cameraHalfWidth;
-    [SerializeField] private ParallaxLayer[] parallaxLayers;
 
-    void Awake()
+    [SerializeField] private ParallaxLayer[] backgroundLayers;
+
+    private void Awake()
     {
         mainCamera = Camera.main;
-        previousCameraX = mainCamera.transform.position.x;
-
-        cameraHalfWidth = mainCamera.orthographicSize * mainCamera.aspect; // ((float)Screen.width / Screen.height)
-
-        CalculateBackgroundWidths();
+        cameraHalfWidth = mainCamera.orthographicSize * mainCamera.aspect;
+        InitializeLayers();
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        float currentCameraX = mainCamera.transform.position.x;
-        float cameraDeltaX = currentCameraX - previousCameraX;
-        previousCameraX = currentCameraX;
+        float currentCameraPositionX = mainCamera.transform.position.x;
+        float distanceToMove = currentCameraPositionX - lastCameraPositionX;
+        lastCameraPositionX = currentCameraPositionX;
 
-        // float cameraLeftEdge = currentCameraX - cameraHalfWidth;
-        // float cameraRightEdge = currentCameraX + cameraHalfWidth;
+        float cameraLeftEdge = currentCameraPositionX - cameraHalfWidth;
+        float cameraRightEdge = currentCameraPositionX + cameraHalfWidth;
 
-        foreach (ParallaxLayer layer in parallaxLayers)
+        foreach (ParallaxLayer layer in backgroundLayers)
         {
-            layer.Move(cameraDeltaX);
+            layer.Move(distanceToMove);
+            layer.LoopBackground(cameraLeftEdge, cameraRightEdge);
         }
     }
 
-    private void CalculateBackgroundWidths()
+    private void InitializeLayers()
     {
-        foreach (ParallaxLayer layer in parallaxLayers)
-        {
-            layer.CalculateWidth();
-        }
+        foreach (ParallaxLayer layer in backgroundLayers)
+            layer.CalculateImageWidth();
     }
 }

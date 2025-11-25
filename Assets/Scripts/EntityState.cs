@@ -1,72 +1,62 @@
-
 using UnityEngine;
 
 public abstract class EntityState
 {
-    protected Player m_Player;
-    protected StateMachine m_StateMachine;
-    protected string m_AnimationBoolName;
+    protected Player player;
+    protected StateMachine stateMachine;
+    protected string animBoolName;
 
-    protected Animator m_Animator;
-    protected Rigidbody2D m_Rigidbody;
-    protected PlayerInputSet m_Input;
+    protected Animator anim;
+    protected Rigidbody2D rb;
+    protected PlayerInputSet input;
 
-    protected float m_StateTimer;
-    protected bool triggerCalled = false;
+    protected float stateTimer;
+    protected bool triggerCalled;
 
-    public EntityState(Player player, StateMachine machine, string animBoolName)
+    public EntityState(Player player, StateMachine stateMachine, string animBoolName)
     {
-        m_Player = player;
-        m_StateMachine = machine;
-        m_AnimationBoolName = animBoolName;
-        m_Animator = player.animator;
-        m_Rigidbody = player.rb;
-        m_Input = player.input;
+        this.player = player;
+        this.stateMachine = stateMachine;
+        this.animBoolName = animBoolName;
+
+        anim = player.anim;
+        rb = player.rb;
+        input = player.input;
     }
 
-    // State will be change into , Eneter will be call
     public virtual void Enter()
     {
-        // Debug.Log($"Enter:{m_StateName}");
-        m_Animator.SetBool(m_AnimationBoolName, true);
+        anim.SetBool(animBoolName, true);
         triggerCalled = false;
     }
 
-    // run logic
     public virtual void Update()
     {
-        m_StateTimer -= Time.deltaTime;
-        m_Animator.SetFloat("YVelocity", m_Rigidbody.linearVelocityY);
+        stateTimer -= Time.deltaTime;
+        anim.SetFloat("yVelocity", rb.linearVelocity.y);
 
-        if (m_Input.Player.Dash.WasPressedThisFrame() && CanDash())
-        {
-            m_StateMachine.ChangeState(m_Player.dashState);
-        }
+        if (input.Player.Dash.WasPressedThisFrame() && CanDash())
+            stateMachine.ChangeState(player.dashState);
     }
 
-    // will be call, when state exit
     public virtual void Exit()
     {
-        m_Animator.SetBool(m_AnimationBoolName, false);
+        anim.SetBool(animBoolName, false);
     }
 
     public void CallAnimationTrigger()
     {
         triggerCalled = true;
-        Debug.Log("triggerCalled set to true");
     }
 
-    bool CanDash()
+    private bool CanDash()
     {
-        if (m_Player.wallDetected)
-        {
+        if (player.wallDetected)
             return false;
-        }
 
-        if (m_Player.dashState == m_StateMachine.currentState)
-        {
+        if (stateMachine.currentState == player.dashState)
             return false;
-        }
+
 
         return true;
     }

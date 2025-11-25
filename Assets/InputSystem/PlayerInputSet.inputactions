@@ -1,33 +1,23 @@
 {
-    "version": 1,
     "name": "PlayerInputSet",
     "maps": [
         {
             "name": "Player",
-            "id": "ef461b99-2c24-40ed-9bc5-c1578c5e7663",
+            "id": "3ffe8cb9-2190-4872-996e-b86fa608e08f",
             "actions": [
                 {
                     "name": "Movement",
                     "type": "Value",
-                    "id": "369a3871-6296-40b4-8e67-40ad6dd637e6",
+                    "id": "71635aa5-f69b-4ff1-b16f-01ca6e0fda0e",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Attack",
-                    "type": "Button",
-                    "id": "e1dc3341-ccf3-44ff-ac2a-2fe65cafcb1f",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Jump",
                     "type": "Button",
-                    "id": "9d363dc2-cd99-42e4-aa4d-de88065081c6",
+                    "id": "6bf1b0d8-6289-4cb7-b3c6-cb2c4b2ee437",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -36,7 +26,16 @@
                 {
                     "name": "Dash",
                     "type": "Button",
-                    "id": "cc583a86-da02-406d-834b-d9467aafcdfc",
+                    "id": "7dab3d30-2bb3-4ab9-9e5e-e5d6ae0c6761",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Attack",
+                    "type": "Button",
+                    "id": "ae3a11b2-30ce-4e93-bad4-46599b84cf93",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -46,7 +45,7 @@
             "bindings": [
                 {
                     "name": "2D Vector",
-                    "id": "d1e0e0a8-c6b8-48d4-a230-52a0ab95ab63",
+                    "id": "2a02dd85-2185-43a5-9156-24392519dcd1",
                     "path": "2DVector(mode=1)",
                     "interactions": "",
                     "processors": "",
@@ -57,89 +56,78 @@
                 },
                 {
                     "name": "up",
-                    "id": "6a92d693-0525-45da-904f-36c380afa4d0",
+                    "id": "5db55a6a-11cc-4d23-8ece-22a644edb009",
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";keyboard&mouse",
+                    "groups": ";Keyboard & Mouse",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "down",
-                    "id": "827c2b05-3ed5-4341-9762-86e35b56f7f5",
+                    "id": "70cf327c-f2ec-4e7c-8b84-95884ce76b2d",
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard & Mouse",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "left",
-                    "id": "4edf6739-72f4-4bc6-a43e-426ae3b3510e",
+                    "id": "6833ef79-db30-4556-916c-7edd9b41df5d",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard & Mouse",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "right",
-                    "id": "f51e40c9-2ab4-4af3-8364-fb701cda4a3b",
+                    "id": "df69494a-da0d-4cea-8790-afd802927546",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard & Mouse",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "",
-                    "id": "5345bb50-915a-4832-8ce7-ed757ac1f5e8",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Attack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e2259bef-f4d6-45b5-889f-c6239d4b9fad",
+                    "id": "fdc861d6-391d-4942-849d-078967922178",
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";keyboard&mouse",
+                    "groups": ";Keyboard & Mouse",
                     "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "b036ffde-2fc3-464d-82e0-de6406bde86f",
-                    "path": "<Keyboard>/j",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "bc04684d-d57f-4d2b-99c6-881aa57623ca",
+                    "id": "af6fa4cd-dbb9-470e-ad6c-f451673e42db",
                     "path": "<Keyboard>/leftShift",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";keyboard&mouse",
+                    "groups": ";Keyboard & Mouse",
                     "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "abc544b3-c049-41a3-8fba-9fe82bf43e0f",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard & Mouse",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -148,8 +136,8 @@
     ],
     "controlSchemes": [
         {
-            "name": "keyboard&mouse",
-            "bindingGroup": "keyboard&mouse",
+            "name": "Keyboard & Mouse",
+            "bindingGroup": "Keyboard & Mouse",
             "devices": [
                 {
                     "devicePath": "<Keyboard>",
